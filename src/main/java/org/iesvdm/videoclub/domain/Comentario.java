@@ -15,7 +15,10 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "content", length = 100)
     private String content;
-    private long tutorial_id;
+
+    @ManyToOne
+    Tutorial tutorial;
 
 }

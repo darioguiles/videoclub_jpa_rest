@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,4 +27,7 @@ public class Tutorial {
     @Column(name = "descripcion", length = 150)
     private String descripcion;
     private boolean publicado;
+
+    @OneToMany(mappedBy = "tutorial")
+   private List<Comentario> comentarios;
 }
