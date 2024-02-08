@@ -17,7 +17,6 @@ public class Socio {
 
     @Column(name = "DNI", length = 15, nullable = false)
     private String DNI;
-    @Column(name = "nombre", length = 15)
     private String nombre;
     private String apellidos;
 
