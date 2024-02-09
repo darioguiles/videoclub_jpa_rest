@@ -9,34 +9,35 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(
+/*@Table(
         name = "tutorial" ,
         schema = "videoclub_jpa",
         indexes = {@Index(name = "titulo_index", columnList = "titulo",unique = false)}
 
-)
+)*/
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Tutorial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_tutorial;
-    @Column(name = "titulo", length = 50)
+    @EqualsAndHashCode.Include
+    private long id;
     private String titulo;
-    @Column(name = "descripcion", length = 150)
+  /*  Comentamos para los tests
+  @Column(name = "descripcion", length = 150)
     private String descripcion;
 
     private boolean publicado;
 
     @Column(name = "fechaPublicacion" ,nullable = false)
     //Metemos la anotacion fecha??
-    private Date fechaPublicacion;
+    private Date fechaPublicacion;*/
 
-    @OneToMany(mappedBy = "tutorial")
-   private List<Comentario> comentarios;
+    @OneToMany(mappedBy = "tutorial", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+   private Set<Comentario> comentarios;
 }

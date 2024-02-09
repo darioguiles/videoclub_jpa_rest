@@ -22,14 +22,18 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Pelicula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     @Column(name="id_pelicula")
     private long idPelicula;
     private String titulo;
-    private String descripcion;
+
+   /* datos extra
+   private String descripcion;
     @Column(name = "anyo_lanzamiento")
     @JsonFormat(pattern = "yyyy",  shape = JsonFormat.Shape.STRING)
     private Date anyoLanzamiento;
@@ -55,16 +59,19 @@ public class Pelicula {
 
     @Column(name = "caracteristicas_especiales")
     private String caracteristicasEspeciales;
-
+*/
     @ManyToMany
     @JoinTable(
             name = "pelicula_categoria",
             joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
             inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria"))
-    Set<Categoria> categorias = new HashSet<>();
 
+    Set<Categoria> categorias = new HashSet<>(); //<- Instanciado
+    //El nombre es lo que hacemos el Mapped by en la otra
+
+    /*
     @Column(name = "ultima_actualizacion")
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
-    private Date ultimaActualizacion;
+    private Date ultimaActualizacion;*/
 
 }

@@ -15,14 +15,14 @@ public class Comentario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //Evitar duplicados con hash
     @EqualsAndHashCode.Include
-    private long id_comentario;
-    @Column(name = "content", length = 100)
-    private String content;
+    private long id;
+   // @Column(name = "texto", length = 100)
+    private String texto;
 
     @ManyToOne
-    @JoinColumn(name = "tutorial_id_fk" , nullable = false,
+    /*@JoinColumn(name = "tutorial_id_fk" , nullable = false,
             referencedColumnName = "id_tutorial",
-            foreignKey = @ForeignKey(name = "FK_TUTO"))
+            foreignKey = @ForeignKey(name = "FK_TUTO"))*/
     @ToString.Exclude
     Tutorial tutorial;
 
