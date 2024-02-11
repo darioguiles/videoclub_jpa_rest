@@ -30,9 +30,11 @@ public class Pelicula {
     @EqualsAndHashCode.Include
     @Column(name="id_pelicula")
     private long idPelicula;
+
+
     private String titulo;
 
-   /* datos extra
+   /* datos extra */
    private String descripcion;
     @Column(name = "anyo_lanzamiento")
     @JsonFormat(pattern = "yyyy",  shape = JsonFormat.Shape.STRING)
@@ -59,7 +61,7 @@ public class Pelicula {
 
     @Column(name = "caracteristicas_especiales")
     private String caracteristicasEspeciales;
-*/
+
     @ManyToMany
     @JoinTable(
             name = "pelicula_categoria",
@@ -69,9 +71,19 @@ public class Pelicula {
     Set<Categoria> categorias = new HashSet<>(); //<- Instanciado
     //El nombre es lo que hacemos el Mapped by en la otra
 
-    /*
+
     @Column(name = "ultima_actualizacion")
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
-    private Date ultimaActualizacion;*/
+    private Date ultimaActualizacion;
+
+//Implementación pelicula - actor
+    @ManyToMany
+    @JoinTable(
+            name = "pelicula_actor",
+            joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
+            inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"))
+
+    private Set<Actor> actores = new HashSet<>();
+
 
 }

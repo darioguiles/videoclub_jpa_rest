@@ -14,7 +14,6 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Categoria {
 
     @Id
@@ -28,10 +27,10 @@ public class Categoria {
             mappedBy = "categorias") //este Set se mapea a partir del otro
     @JsonIgnore
     Set<Pelicula> peliculas = new HashSet<>();
-/*
+
     @Column(name = "ultima_actualizacion")
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
     private Date ultimaActualizacion;
-*/
+
 
 }

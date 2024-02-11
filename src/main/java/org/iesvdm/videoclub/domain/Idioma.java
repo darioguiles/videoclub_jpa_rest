@@ -28,7 +28,7 @@ public class Idioma {
     @Column(name = "id_idioma")
     private Long id;
     private String nombre;
-/* Omitimos para los test de Peli-Cat
+ // Omitimos para los test de Peli-Cat
     @Column(name = "ultima_actualizacion")
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
     private Date ultimaActualizacion;
@@ -42,5 +42,5 @@ public class Idioma {
     private List<Pelicula> peliculasIdiomaOriginal;
 
 
- */
+
 }
