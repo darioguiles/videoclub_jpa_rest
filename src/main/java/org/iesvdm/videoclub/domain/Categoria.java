@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode(of = "nombre")
 @Entity
 @Table(name = "categoria")
 @Data
@@ -21,6 +23,13 @@ public class Categoria {
     @EqualsAndHashCode.Include
     @Column(name = "id_categoria")
     private long id;
+
+    /*
+    * Esta Anotacion junto a la de @EqualsAndHashCode
+    * Nos permiten que en el Set<> nombre sea considerado Id
+    * evitandonos así la repetición de categoria
+    * */
+    @NaturalId
     private String nombre;
 
     @ManyToMany(

@@ -43,6 +43,9 @@ public class Pelicula {
     @ManyToOne()
     @JoinColumn(name = "id_idioma", nullable = false)
     private Idioma idioma;
+    //Esta entidad es unica y obligatoria
+    //Tenemos una relación Muchos a Uno siendo nuestro lado el del
+    // uno el fuerte
 
     @ManyToOne()
     @JoinColumn(name = "id_idioma_original")
