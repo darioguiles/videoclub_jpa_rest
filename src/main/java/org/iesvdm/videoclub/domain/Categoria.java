@@ -10,9 +10,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@EqualsAndHashCode(of = "nombre")
 @Entity
-@Table(name = "categoria")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true) // Usar estilo nuevo
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,14 +20,16 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    // Error java: The old-style 'exclude/of' parameter cannot be used together with the new-style @Include / @Exclude annotations.
+    //Solución: @EqualsAndHashCode.Include en atributos y @EqualsAndHashCode(onlyExplicitlyIncluded = true) en la clase
     @Column(name = "id_categoria")
     private long id;
 
-    /*
-    * Esta Anotacion junto a la de @EqualsAndHashCode
+    /* Esta Anotacion junto a la de @EqualsAndHashCode
     * Nos permiten que en el Set<> nombre sea considerado Id
     * evitandonos así la repetición de categoria
-    * */
+    */
+    @EqualsAndHashCode.Include
     @NaturalId
     private String nombre;
 

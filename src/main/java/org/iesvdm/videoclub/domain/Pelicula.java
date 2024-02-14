@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="pelicula")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,7 +33,7 @@ public class Pelicula {
 
     private String titulo;
 
-   /* datos extra */
+   /* datos extra
    private String descripcion;
     @Column(name = "anyo_lanzamiento")
     @JsonFormat(pattern = "yyyy",  shape = JsonFormat.Shape.STRING)
@@ -64,7 +63,7 @@ public class Pelicula {
 
     @Column(name = "caracteristicas_especiales")
     private String caracteristicasEspeciales;
-
+*/
     @ManyToMany
     @JoinTable(
             name = "pelicula_categoria",
@@ -73,12 +72,12 @@ public class Pelicula {
 
     Set<Categoria> categorias = new HashSet<>(); //<- Instanciado
     //El nombre es lo que hacemos el Mapped by en la otra
-
+/*
 
     @Column(name = "ultima_actualizacion")
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
     private Date ultimaActualizacion;
-
+*/
 //Implementación pelicula - actor
     @ManyToMany
     @JoinTable(

@@ -10,8 +10,8 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/categorias")
+@CrossOrigin(origins = "http://localhost:8080")
+@RequestMapping("/v1/categorias")
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
