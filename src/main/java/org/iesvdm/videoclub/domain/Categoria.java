@@ -29,8 +29,6 @@ public class Categoria {
     * Nos permiten que en el Set<> nombre sea considerado Id
     * evitandonos así la repetición de categoria
     */
-    @EqualsAndHashCode.Include
-    @NaturalId
     private String nombre;
 
     @ManyToMany(
