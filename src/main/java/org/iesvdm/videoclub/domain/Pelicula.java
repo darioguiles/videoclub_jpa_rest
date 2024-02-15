@@ -83,8 +83,8 @@ public class Pelicula {
     @JoinTable(
             name = "pelicula_actor",
             joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
-            inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor"))
-
+            inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor")) //Esto nos sirve para mayor control y con los IDs
+        //V
     private Set<Actor> actores = new HashSet<>();
 
 
