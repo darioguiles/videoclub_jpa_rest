@@ -25,6 +25,6 @@ public class Actor {
     private String apellidos;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Pelicula> peliculas = new HashSet<>();
 }

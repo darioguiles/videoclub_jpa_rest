@@ -72,7 +72,7 @@ public class Pelicula {
 */
 //Implementación pelicula - actor
 
-    @ManyToMany(mappedBy = "peliculas")
+    @ManyToMany(mappedBy = "peliculas", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<Actor> actores = new HashSet<>();
 
