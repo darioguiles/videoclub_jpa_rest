@@ -3,10 +3,7 @@ package org.iesvdm.videoclub.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +24,7 @@ public class Actor {
     private String nombre;
     private String apellidos;
 
-    @ManyToMany(mappedBy = "actores") //Mapeamos la relaci´pn
     @JsonIgnore
+    @ManyToMany
     private Set<Pelicula> peliculas = new HashSet<>();
 }

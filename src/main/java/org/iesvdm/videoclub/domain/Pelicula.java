@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -64,12 +61,7 @@ public class Pelicula {
     @Column(name = "caracteristicas_especiales")
     private String caracteristicasEspeciales;
 */
-    @ManyToMany
-    @JoinTable(
-            name = "pelicula_categoria",
-            joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
-            inverseJoinColumns = @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria"))
-
+    @ManyToMany(mappedBy = "peliculas", fetch = FetchType.EAGER)
     Set<Categoria> categorias = new HashSet<>(); //<- Instanciado
     //El nombre es lo que hacemos el Mapped by en la otra
 /*
@@ -79,12 +71,9 @@ public class Pelicula {
     private Date ultimaActualizacion;
 */
 //Implementación pelicula - actor
-    @ManyToMany
-    @JoinTable(
-            name = "pelicula_actor",
-            joinColumns = @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula"),
-            inverseJoinColumns = @JoinColumn(name = "id_actor", referencedColumnName = "id_actor")) //Esto nos sirve para mayor control y con los IDs
-        //V
+
+    @ManyToMany(mappedBy = "peliculas")
+    @ToString.Exclude
     private Set<Actor> actores = new HashSet<>();
 
 

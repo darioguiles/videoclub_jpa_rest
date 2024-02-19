@@ -27,18 +27,21 @@ public class Categoria {
 
     /* Esta Anotacion junto a la de @EqualsAndHashCode
     * Nos permiten que en el Set<> nombre sea considerado Id
-    * evitandonos así la repetición de categoria
+    * evitandonos así la repetición de categoria, pero da problemas en la implementación...
     */
     private String nombre;
 
     @ManyToMany(
-            mappedBy = "categorias") //este Set se mapea a partir del otro
+            fetch = FetchType.EAGER
+    ) //este Set se mapea a partir del otro
     @JsonIgnore
+    @ToString.Exclude
     Set<Pelicula> peliculas = new HashSet<>();
 
+    /*
     @Column(name = "ultima_actualizacion")
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
     private Date ultimaActualizacion;
-
+*/
 
 }
