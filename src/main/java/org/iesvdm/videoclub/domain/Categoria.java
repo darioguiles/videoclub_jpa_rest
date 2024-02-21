@@ -34,7 +34,7 @@ public class Categoria {
     @ManyToMany(
             fetch = FetchType.EAGER
     ) //este Set se mapea a partir del otro
-    @JsonIgnore
+    @JsonIgnore //Si queremos mostrar la categoria
     @ToString.Exclude
     Set<Pelicula> peliculas = new HashSet<>();
 
@@ -42,6 +42,6 @@ public class Categoria {
     @Column(name = "ultima_actualizacion")
     @JsonFormat(pattern = "yyyy-MM-dd-HH:mm:ss",  shape = JsonFormat.Shape.STRING)
     private Date ultimaActualizacion;
-*/
+    */
 
 }

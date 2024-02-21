@@ -1,15 +1,23 @@
 package org.iesvdm.videoclub.service;
 
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.iesvdm.videoclub.domain.Categoria;
 import org.iesvdm.videoclub.exception.CategoriaNotFoundException;
 import org.iesvdm.videoclub.repository.CategoriaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoriaService {
+
+    @Autowired
+    private EntityManager em;
+
     private final CategoriaRepository categoriaRepository;
 
     public CategoriaService(CategoriaRepository categoriaRepository) {
@@ -44,4 +52,26 @@ public class CategoriaService {
     }
 
 
+    public List<Categoria> allByQueryFiltersStream(Optional<String> buscarOpc, Optional<String> ordenarOpt) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT C from Categoria C");
+        if (buscarOpc.isPresent())
+        {
+            queryBuilder.append(" ").append("WHERE C.nombre like :nombre");
+        }
+        if (ordenarOpt.isPresent())
+        {
+            if (buscarOpc.isPresent() && "asc".equalsIgnoreCase(buscarOpc.get()) ) {
+                queryBuilder.append(" ").append("ORDER BY C.nombre ASC");
+            } else if(buscarOpc.isPresent() && "desc".equalsIgnoreCase(buscarOpc.get())) {
+                queryBuilder.append(" ").append("ORDER BY C.nombre DESC");
+            }
+        }
+        //Consulta JPQL, sintaxis SQL pero con una entidad JPA
+        Query query = em.createQuery(queryBuilder.toString());
+        if (buscarOpc.isPresent()){
+            query.setParameter("nombre", "%"+buscarOpc.get()+"%");
+        }
+
+        return query.getResultList();
+    }
 }
