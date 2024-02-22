@@ -60,9 +60,9 @@ public class CategoriaService {
         }
         if (ordenarOpt.isPresent())
         {
-            if (buscarOpc.isPresent() && "asc".equalsIgnoreCase(buscarOpc.get()) ) {
+            if (buscarOpc.isPresent() && "asc".equalsIgnoreCase(ordenarOpt.get()) ) {
                 queryBuilder.append(" ").append("ORDER BY C.nombre ASC");
-            } else if(buscarOpc.isPresent() && "desc".equalsIgnoreCase(buscarOpc.get())) {
+            } else if(buscarOpc.isPresent() && "desc".equalsIgnoreCase(ordenarOpt.get())) {
                 queryBuilder.append(" ").append("ORDER BY C.nombre DESC");
             }
         }
