@@ -15,8 +15,8 @@ import java.util.Optional;
 @Service
 public class CategoriaService {
 
-    @Autowired
-    private EntityManager em;
+   /* @Autowired
+    private EntityManager em;*/
 
     private final CategoriaRepository categoriaRepository;
 
@@ -52,26 +52,40 @@ public class CategoriaService {
     }
 
 
+
+    /*
+    * Este metodo se puede conformar por las 2 formas, la forma Que usamos ahora mediante
+    * JPARepository de forma simple mediante métodos con formas predefinidas O con JPQL para lo cual nos ha falta StringBuilder para construir las queries
+    * Query y un EntityManager.
+    *
+    * */
     public List<Categoria> allByQueryFiltersStream(Optional<String> buscarOpc, Optional<String> ordenarOpt) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT C from Categoria C");
+
+        List<Categoria> resultado = null;
+        //StringBuilder queryBuilder = new StringBuilder("SELECT C from Categoria C");
         if (buscarOpc.isPresent())
         {
-            queryBuilder.append(" ").append("WHERE C.nombre like :nombre");
+            //queryBuilder.append(" ").append("WHERE C.nombre like :nombre");
+            resultado = categoriaRepository.findByNombreContainingIgnoreCase(buscarOpc.get());
         }
         if (ordenarOpt.isPresent())
         {
             if (buscarOpc.isPresent() && "asc".equalsIgnoreCase(ordenarOpt.get()) ) {
-                queryBuilder.append(" ").append("ORDER BY C.nombre ASC");
+               // queryBuilder.append(" ").append("ORDER BY C.nombre ASC");
+                resultado = categoriaRepository.findByNombreContainingIgnoreCaseOrderByNombreAsc(buscarOpc.get());
+
             } else if(buscarOpc.isPresent() && "desc".equalsIgnoreCase(ordenarOpt.get())) {
-                queryBuilder.append(" ").append("ORDER BY C.nombre DESC");
+                //queryBuilder.append(" ").append("ORDER BY C.nombre DESC");
+                resultado = categoriaRepository.findByNombreContainingIgnoreCaseOrderByNombreDesc(buscarOpc.get());
             }
         }
         //Consulta JPQL, sintaxis SQL pero con una entidad JPA
-        Query query = em.createQuery(queryBuilder.toString());
+       /* Query query = em.createQuery(queryBuilder.toString());
         if (buscarOpc.isPresent()){
             query.setParameter("nombre", "%"+buscarOpc.get()+"%");
-        }
+        }*/
+        //return query.getResultList();
 
-        return query.getResultList();
+        return resultado;
     }
 }

@@ -4,9 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.videoclub.domain.Categoria;
 import org.iesvdm.videoclub.service.CategoriaService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -30,12 +33,12 @@ public class CategoriaController {
     @GetMapping(value = {"","/"})
     public List<Categoria> all(@RequestParam("buscar") Optional<String> buscarOpc
             , @RequestParam("ordenar") Optional<String> ordenarOpt) {
-        log.info("Accediendo a todas las películas con filtro buscar: %s y ordenar");
+        log.info("Accediendo a todas las categorias con filtro buscar: %s y ordenar");
             buscarOpc.orElse("VOID");
             ordenarOpt.orElse("VOID");
+
         return this.categoriaService.allByQueryFiltersStream(buscarOpc, ordenarOpt);
     }
-
 
 
     @PostMapping({"","/"})
