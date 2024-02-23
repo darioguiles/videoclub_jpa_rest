@@ -7,9 +7,15 @@ import org.iesvdm.videoclub.domain.Categoria;
 import org.iesvdm.videoclub.exception.CategoriaNotFoundException;
 import org.iesvdm.videoclub.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -27,6 +33,26 @@ public class CategoriaService {
     public List<Categoria> all() {
         return this.categoriaRepository.findAll();
     }
+
+    public Map<String, Object> all(int pagina, int tamanio) {
+        //  org.springframework.data.domain public interface Pageable  Maven: org.springframework.data
+
+        Pageable paginado = PageRequest.of(pagina, tamanio, Sort.by("id" ).ascending());
+        //Interfaces
+        Page<Categoria> pageAll = this.categoriaRepository.findAll(paginado);
+
+        Map<String,Object> response = new HashMap<>();
+
+        response.put("categorias", pageAll.getContent());
+        response.put("currentPage", pageAll.getNumber());
+        response.put("totalItems", pageAll.getTotalElements());
+        response.put("totalPages", pageAll.getTotalPages());
+
+        return response;
+    }
+
+
+
 
     public Categoria save(Categoria categoria) {
         return this.categoriaRepository.save(categoria);

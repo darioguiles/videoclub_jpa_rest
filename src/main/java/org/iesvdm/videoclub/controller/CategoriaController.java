@@ -2,6 +2,7 @@ package org.iesvdm.videoclub.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.videoclub.domain.Categoria;
+import org.iesvdm.videoclub.domain.Pelicula;
 import org.iesvdm.videoclub.service.CategoriaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,13 @@ public class CategoriaController {
         this.categoriaService = categoriaService;
     }
 
-    @GetMapping(value = {"","/"}, params = {"!buscar", "!ordenar"})
+    @GetMapping(value = {"","/"}, params = {"!buscar", "!ordenar", "!pagina", "!tamanio"})
     public List<Categoria> all() {
         log.info("Accediendo a todas las películas");
         return this.categoriaService.all();
     }
 
-    @GetMapping(value = {"","/"})
+    @GetMapping(value = {"","/"}, params = {"!pagina", "!tamanio"}) // <- Hace falta bloquear la paginación por esta ruta
     public List<Categoria> all(@RequestParam("buscar") Optional<String> buscarOpc
             , @RequestParam("ordenar") Optional<String> ordenarOpt) {
         log.info("Accediendo a todas las categorias con filtro buscar: %s y ordenar");
@@ -39,6 +40,18 @@ public class CategoriaController {
 
         return this.categoriaService.allByQueryFiltersStream(buscarOpc, ordenarOpt);
     }
+
+
+    @GetMapping(value = {"","/"})
+    public ResponseEntity<Map<String,Object>> all(@RequestParam( value = "pagina", defaultValue = "0") int pagina
+            , @RequestParam(value = "tamanio" , defaultValue = "3") int tamanio) {
+        log.info("Accediendo a todas las películas con paginacion");
+
+        Map<String, Object> responseAll = this.categoriaService.all(pagina, tamanio);
+
+        return ResponseEntity.ok(responseAll);
+    }
+
 
 
     @PostMapping({"","/"})

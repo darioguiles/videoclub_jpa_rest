@@ -44,4 +44,6 @@ public class Categoria {
     private Date ultimaActualizacion;
     */
 
+    // @Transient
+    // private int conteo // Esto nos permite tener una atributo que no se inicializa, sacando el DTO de la ecuacion
 }
