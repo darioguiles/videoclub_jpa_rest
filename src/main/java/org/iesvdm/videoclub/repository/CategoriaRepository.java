@@ -19,7 +19,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria,Long> {
     public List<Categoria> findByNombreContainingIgnoreCase (String titulo);
     public List<Categoria> findByNombreContainingIgnoreCaseOrderByNombreAsc (String titulo);
     public List<Categoria> findByNombreContainingIgnoreCaseOrderByNombreDesc (String titulo);
-   // public long getAllByPeliculas(Set<Pelicula> peliculas); // (NO FUNCIONA) <- metodo para sacar el conteo al pasarle el set??
 
 
 }

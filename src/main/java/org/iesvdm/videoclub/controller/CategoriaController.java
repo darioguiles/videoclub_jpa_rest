@@ -3,6 +3,7 @@ package org.iesvdm.videoclub.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.videoclub.domain.Categoria;
 import org.iesvdm.videoclub.domain.Pelicula;
+import org.iesvdm.videoclub.dto.CategoriaDTO;
 import org.iesvdm.videoclub.service.CategoriaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -26,9 +28,17 @@ public class CategoriaController {
     }
 
     @GetMapping(value = {"","/"}, params = {"!buscar", "!ordenar", "!pagina", "!tamanio"})
-    public List<Categoria> all() {
-        log.info("Accediendo a todas las películas");
-        return this.categoriaService.all();
+    public List<CategoriaDTO> all() {
+        log.info("Accediendo a todas las categorias");
+
+        List<Categoria> listaCat = this.categoriaService.all();
+
+        // Convertir la lista de Categoria a lista de CategoriaDTO
+        List<CategoriaDTO> categoriaDTOList = listaCat.stream()
+                .map(CategoriaDTO::new)
+                .collect(Collectors.toList());
+
+        return categoriaDTOList;
     }
 
     @GetMapping(value = {"","/"}, params = {"!pagina", "!tamanio"}) // <- Hace falta bloquear la paginación por esta ruta

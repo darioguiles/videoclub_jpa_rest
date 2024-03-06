@@ -10,9 +10,9 @@ public class CategoriaDTO extends Categoria {
 
     public CategoriaDTO(Categoria categoria){
         super(categoria.getId(), categoria.getNombre(), categoria.getPeliculas());
-        this.conteo=categoria.getPeliculas().size();
+        this.conteo_pelicula=categoria.getPeliculas().size();
     }
 
-    int conteo;
+   private int conteo_pelicula;
 
 }
