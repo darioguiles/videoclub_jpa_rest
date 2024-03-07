@@ -21,15 +21,15 @@ public class PeliculaController {
         this.peliculaService = peliculaService;
     }
 
-    @GetMapping(value = {"","/"}, params = {"!pagina", "!tamanio"})
+    @GetMapping(value = {"","/"}, params = {"!pagina", "!tamanio","!order"})
     public List<Pelicula> all() {
         log.info("Accediendo a todas las películas");
         return this.peliculaService.all();
     }
 
 
-    @GetMapping(value = {"","/"})
-    public ResponseEntity<Map<String,Object>> all(@RequestParam( value = "buscar", defaultValue = "0") int pagina
+    @GetMapping(value = {"","/"}, params = {"!order"})
+    public ResponseEntity<Map<String,Object>> all(@RequestParam( value = "pagina", defaultValue = "0") int pagina
             , @RequestParam(value = "tamanio" , defaultValue = "3") int tamanio) {
         log.info("Accediendo a todas las películas con paginacion");
 
@@ -38,8 +38,18 @@ public class PeliculaController {
         return ResponseEntity.ok(responseAll);
     }
 
+    @GetMapping(value = {"","/"}, params = {"!pagina", "!tamanio"})
+    public List<Pelicula> all(@RequestParam( value = "order", defaultValue = "idPelicula,asc") String[] order) {
 
 
+        log.info("Accediendo a todos los parametros con el orden " + order[0] + " y " + order[1] );
+
+        //Problemas: titulo (error en el order[1] al estar vacio)
+        // titulo, no se da ordenación y se queda vacio, el default no funciona?
+        // TODO fixear estos errores o buscar alternativas
+
+        return this.peliculaService.all(order);
+    }
 
 
     @PostMapping({"","/"})

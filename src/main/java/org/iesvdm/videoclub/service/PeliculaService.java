@@ -1,14 +1,18 @@
 package org.iesvdm.videoclub.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.iesvdm.videoclub.domain.Pelicula;
 import org.iesvdm.videoclub.exception.PeliculaNotFoundException;
 import org.iesvdm.videoclub.repository.PeliculaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +20,8 @@ import java.util.Map;
 @Service
 public class PeliculaService {
 
+    @Autowired
+    EntityManager entityManager;
     private final PeliculaRepository peliculaRepository;
 
     public PeliculaService(PeliculaRepository peliculaRepository) {
@@ -35,6 +41,11 @@ public class PeliculaService {
 
         Map<String,Object> response = new HashMap<>();
 
+        /*
+        * Aqui devolvemos un Page filtrado y acotado, solo con los
+        * items totales y las paginas totales
+        * */
+
         response.put("peliculas", pageAll.getContent());
         response.put("currentPage", pageAll.getNumber());
         response.put("totalItems", pageAll.getTotalElements());
@@ -42,6 +53,48 @@ public class PeliculaService {
 
         return response;
     }
+
+    public List<Pelicula> all(String[] order) {
+        //  org.springframework.data.domain public interface Pageable  Maven: org.springframework.data
+
+        List<Pelicula> listaAtributos = new ArrayList<>();
+
+        String parametro = order[0];
+        String ordenacion = order[1];
+        String queryStr = "select P from Pelicula P";
+        Query query = null;
+
+
+
+        if (parametro!=null && !parametro.isBlank() && ordenacion!=null && !ordenacion.isBlank())
+        {
+
+            if (parametro.equals("idPelicula") || parametro.equalsIgnoreCase("id_pelicula") ){
+                queryStr+=" order by P.idPelicula";
+            }
+            else if (parametro.equals("titulo")) {
+                queryStr+=" order by P.titulo";
+
+            }
+
+            if (ordenacion.equalsIgnoreCase("asc"))
+            {
+                queryStr+=" ASC";
+            } else if (ordenacion.equalsIgnoreCase("desc")) {
+                queryStr+=" DESC";
+            }
+
+        }
+
+        query = entityManager.createQuery(queryStr,Pelicula.class);
+
+
+        return query.getResultList();
+    }
+
+
+
+
 
     public Pelicula save(Pelicula pelicula) {
         return this.peliculaRepository.save(pelicula);
