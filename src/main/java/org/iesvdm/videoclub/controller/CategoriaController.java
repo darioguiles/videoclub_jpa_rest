@@ -38,6 +38,8 @@ public class CategoriaController {
                 .map(CategoriaDTO::new)
                 .collect(Collectors.toList());
 
+        //Para mejorar el consumo de memoria quitar esto del path por defecto y que sea con el parametro count?
+
         return categoriaDTOList;
     }
 
